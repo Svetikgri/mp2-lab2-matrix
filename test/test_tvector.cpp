@@ -101,7 +101,11 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 
 TEST(TVector, assign_operator_change_vector_size)//?
 {
-  ADD_FAILURE();
+  TVector<int> v1(10);
+	v1[1] = 1;
+	TVector<int> v2(5);
+	v2 = v1;
+EXPECT_EQ(v1.GetSize(), 10);
 }
 
 TEST(TVector, can_assign_vectors_of_different_size)
@@ -124,7 +128,7 @@ TEST(TVector, compare_equal_vectors_return_true)
 TEST(TVector, compare_vector_with_itself_return_true)
 {
 		TVector<int> v1(10);
-		v1[0]=1;
+		//v1[0]=1;
   	EXPECT_EQ(true, v1 == v1);
 }
 
@@ -141,7 +145,7 @@ TEST(TVector, can_add_scalar_to_vector)
 	v1[0]=1;
 	int a=2;
 	v1=v1+a;
-	EXPECT_EQ(2, v1[0]);
+	EXPECT_EQ(3, v1[0]);
 }
 
 TEST(TVector, can_subtract_scalar_from_vector)//может вычитать
@@ -158,7 +162,7 @@ TEST(TVector, can_multiply_scalar_by_vector)
   TVector<int> v1(10);
 	v1[0]=1;
 	//int a=2;
-	v1=2*v1;
+	v1=v1*2;
 	EXPECT_EQ(2, v1[0]);
 }
 
@@ -166,11 +170,11 @@ TEST(TVector, can_add_vectors_with_equal_size)
 {
 	 TVector<int> v1(10);
 	TVector<int> v2(10);
+	TVector<int> res(10);
 	v1[0]=5;
 	v2[0]=3;
-	int res=8;
-
- EXPECT_EQ(res, v1+v2);
+	res=v1+v2;
+ EXPECT_EQ(8, res[0]);
 }
 
 TEST(TVector, cant_add_vectors_with_not_equal_size)
@@ -184,29 +188,31 @@ TEST(TVector, can_subtract_vectors_with_equal_size)
 {
    TVector<int> v1(10);
 	TVector<int> v2(10);
+	TVector<int> res(10);
 	v1[0]=5;
 	v2[0]=3;
-	int res=2;
-
- EXPECT_EQ(res, v1-v2);
+	res[0]=v1[0]-v2[0];
+ EXPECT_EQ(2, res[0]);
 }
 
 TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 {
   TVector<int> v1(10);
 	TVector<int> v2(15);
-  ASSERT_ANY_THROW(TVector<int> res(v1+v2));
+  ASSERT_ANY_THROW(TVector<int> res(v1-v2));
 }
 
 TEST(TVector, can_multiply_vectors_with_equal_size)
 {
  TVector<int> v1(10);
 	TVector<int> v2(10);
-	v1[0]=2;
-	v2[0]=3;
-	int res=6;
+	int res;
 
- EXPECT_EQ(res, v1*v2);
+	v1[0]=5;
+	v2[0]=3;
+	res=v1[0]*v2[0];
+ EXPECT_EQ(15, res);
+
 }
 
 TEST(TVector, cant_multiply_vectors_with_not_equal_size)
